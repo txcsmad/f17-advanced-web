@@ -9,13 +9,40 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 175px;
   padding: 20px;
-  color: white;
+  color: #ffffff;
 }
+
+.App-header a {
+  padding: 3px;
+  color: #ffffff;
+}
+
+.App-header a:visited {
+  color: #00ffff;
+}
+
 
 .App-intro {
   font-size: large;
+}
+
+.button-square {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  text-align: center;
+  line-height: 100px;
+  background-color: #d3d3d3;
+}
+
+.board {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 360px;
 }
 
 @keyframes App-logo-spin {
