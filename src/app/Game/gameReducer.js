@@ -16,9 +16,18 @@ const INIT_STATE = {
 const gameReducer = (state = INIT_STATE, action) => {
   switch (action.type) {
     case CLICK_BUTTON:
-      // TODO fill out with precheck, new board splice, return state
+      if (state.gameWinner !== null || state.board[action.y * 3 + action.x] !== "") {
+        return state;
+      }
+
+      let newBoard = state.board.splice(0);
+      newBoard[action.y * 3 + action.x] = state.currentPlayer === 0 ? "X" : "O";
+
       return {
         ...state,
+        board: newBoard,
+        gameWinner: getWinner(newBoard),
+        currentPlayer: state.currentPlayer === 0 ? 1 : 0
       };
     default:
       return state;

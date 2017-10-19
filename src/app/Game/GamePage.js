@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { clickButton } from './gameActions';
 import SquareButton from '../Global/SquareButton';
 
-class GamePage extends Component {
+export class GamePage extends Component {
   static propTypes = {
     board: PropTypes.array.isRequired,
     gameWinner: PropTypes.string,
@@ -32,21 +32,22 @@ class GamePage extends Component {
 
 class ConnectedGamePage extends Component {
   render() {
-    // TODO render GamePage
     return (
+      <GamePage board={this.props.board} gameWinner={this.props.gameWinner} clickButton={this.props.clickButton} />
     );
   }
 }
 
 const mapStateToProps = state => {
-  // TODO map state
   return {
+    board: state.gameState.board,
+    gameWinner: state.gameState.gameWinner
   }
 };
 
 const mapDispatchToProps = dispatch => {
-  // TODO map actions
   return {
+    clickButton: bindActionCreators(clickButton, dispatch)
   }
 };
 

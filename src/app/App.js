@@ -11,14 +11,15 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      // TODO give provider
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          <TextPage text={"Hello"}/>
+      <Provider store={store}>
+        <div className="App">
+          <div className="App-header">
+            <img src={logo} className="App-logo" alt="logo"/>
+            <TextPage text={"Hello"}/>
+          </div>
+          <Routes/>
         </div>
-        <Routes/>
-      </div>
+      </Provider>
     );
   }
 }
