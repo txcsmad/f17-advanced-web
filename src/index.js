@@ -1,14 +1,12 @@
 import React from 'react';
-import { render } from 'react-dom';
-
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
 import './index.css';
-import App from './app/App';
+import store from './store'
+import Pokedex from './components/Pokedex.js';
+import registerServiceWorker from './registerServiceWorker';
 
-render(<App />, document.getElementById('root'));
-
-if (module.hot) {
-  module.hot.accept('./app/App', () => {
-    const NewApp = require('./app/App').default;
-    render(<NewApp />, document.getElementById('root'));
-  })
-}
+ReactDOM.render(<Provider store={store}>
+    <Pokedex />
+  </Provider>, document.getElementById('root'));
+registerServiceWorker();

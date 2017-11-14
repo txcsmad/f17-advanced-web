@@ -1,0 +1,16 @@
+.choice {
+  background-color: rgb(255, 255, 255);
+  border: 2px black solid;
+  height: 50px;
+  width: 200px;
+  user-select: none;
+  cursor: default;
+}
+
+.choice:hover {
+  background-color: rgb(193, 193, 193);
+}
+
+.selected {
+    background-color: rgb(111, 111, 111);
+}
