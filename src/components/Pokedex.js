@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ListChoices from './ListChoices'
-import Score from './Score'
-
 import { revealPokemon, fetchPokemon, setChoices, selectAnswer } from '../reducers/actions'
 
 import * as PokeUtils from '../utils'
 
+import ListChoices from './ListChoices'
+
 import './Pokedex.css'
 import loading from '../img/loading.gif'
-import empty_background from '../img/empty_background.png'
+import empty_background from '../img/empty_background_pixellated.png'
 
 
 const img = new Image();
@@ -17,11 +16,6 @@ img.crossOrigin = "Anonymous";
 
 
 class Pokedex extends Component {
-  constructor(props) {
-    super(props)
-
-    this.answerHandler = this.answerHandler.bind(this)
-  }
 
   componentDidMount() {
     this.props.dispatch(fetchPokemon(1))
@@ -64,49 +58,33 @@ class Pokedex extends Component {
     img.onload = this.drawLoadedImage.bind(this)
   }
 
-  toggleBlack() {
-    this.props.dispatch(revealPokemon())
-  }
-
-  answerHandler (pokemon){
-    if(!this.props.pokemon.ready) {
-      return
-    }
-    if (pokemon === this.props.pokemon.pokemon ){
-      // Correct
-      console.log('correct')
-
-      this.toggleBlack()
-      this.props.dispatch(selectAnswer())
-      setTimeout(()=> {
-        this.toggleBlack()
-        let choices = PokeUtils.chooseThreePokemon()
-        let answer = Math.floor(Math.random() * 3)
-        this.props.dispatch(setChoices(choices))
-        this.props.dispatch(fetchPokemon(choices[answer]))
-      }, 1000)
-    }else {
-      console.log('wrong!')
-    }
-  }
-
   render() {
     return (
       <div className="pokedex-wrapper">
         <canvas ref="canvas" className="pokedex-canvas" />
         {this.props.pokemon.isFetching ? (<img className={"loading"} src={loading}/>) : (null) }
         <img className="background" src={empty_background} width={960} height={540} />
-        <ListChoices choices={this.props.pokemon.choices} onClick={this.answerHandler}/>
+        <ListChoices choices={this.props.pokemon.choices} onClick={this.props.selectAnswer}/>
       </div>
     )
   }
 }
 
-Pokedex = connect((store) => {
+function mapStateToProps(state) {
   return {
-    revealed: store.revealed,
-    pokemon: store.pokemon
+    revealed: state.revealed,
+    pokemon: state.pokemon
   }
-})(Pokedex)
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toggleBlack: () => dispatch(revealPokemon()),
+    selectAnswer: (ans) => dispatch(selectAnswer(ans)),
+    dispatch: dispatch
+  }
+}
+
+Pokedex = connect(mapStateToProps, mapDispatchToProps)(Pokedex)
 
 export default Pokedex
